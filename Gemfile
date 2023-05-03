@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'bcrypt',         '3.1.12'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
@@ -36,6 +38,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap-sass', '3.3.7'
 
 gem 'rails-controller-testing'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
