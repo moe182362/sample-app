@@ -1,19 +1,23 @@
-require 'test_helper'
+module SessionsHelper
 
-class SessionsHelperTest < ActionView::TestCase
-
-  def setup
-    @user = users(:michael)
-    remember(@user)
+  # 渡されたユーザーでログインする
+  def log_in(user)
+    session[:user_id] = user.id
   end
 
-  test "current_user returns right user when session is nil" do
-    assert_equal @user, current_user
-    assert is_logged_in?
+  # 現在ログイン中のユーザーを返す (いる場合)
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
-  test "current_user returns nil when remember digest is wrong" do
-    @user.update_attribute(:remember_digest, User.digest(User.new_token))
-    assert_nil current_user
+  # ユーザーがログインしていれば true、その他なら false を返す
+  def logged_in?
+    !current_user.nil?
+  end
+
+  # 現在のユーザーをログアウトする
+  def log_out
+    session.delete(:user_id)
+    @current_user = nil
   end
 end
